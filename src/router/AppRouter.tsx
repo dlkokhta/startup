@@ -1,12 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 
 import { Homepage } from "../pages/homePage";
-import { ROUTES } from "../enums";
+import { RegisterPage } from "../pages/registerPage";
+import { ROUTES } from "../constants";
 
-export const RouterProvider = () => {
+export const AppRouter = () => {
   return (
     <Routes>
       <Route path={ROUTES.Home} element={<Homepage />} />
+      <Route path={ROUTES.Register} element={<RegisterPage />} />
     </Routes>
   );
 };
