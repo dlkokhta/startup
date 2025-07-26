@@ -1,2 +1,3 @@
 export * from "./homePage";
-export * from "./auth/registerPage";
+export * from "./registerPage";
+export * from "./loginPage";

@@ -1,6 +1,16 @@
-import type { RegistrationInputField } from "../types/registrationInputField";
+// import type { RegistrationInputFieldTypes } from "../types/registrationInputFieldTypes.js";
 
-const RegistrationInputField: React.FC<RegistrationInputField> = ({
+interface RegistrationInputField {
+  label: string;
+  errors: any;
+  type: string;
+  id: string;
+  register: any;
+  name: any;
+  errorMessage: any;
+}
+
+export const RegistrationInputField: React.FC<RegistrationInputField> = ({
   label,
   errors,
   type,
@@ -23,9 +33,7 @@ const RegistrationInputField: React.FC<RegistrationInputField> = ({
         {...register(name)}
         name={name}
       />
-      {errors && <div className="text-xs text-red">{errorMessage}</div>}
+      {errors && <div className="text-xs text-red-400">{errorMessage}</div>}
     </div>
   );
 };
-
-export default RegistrationInputField;

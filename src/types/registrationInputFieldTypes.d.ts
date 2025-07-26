@@ -1,7 +1,7 @@
-interface RegistrationInputField {
+export interface RegistrationInputFieldTypes {
   label: string;
   errors: any;
-  type: string;
+  type: any;
   id: string;
   register: any;
   name: any;

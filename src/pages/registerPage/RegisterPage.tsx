@@ -1,44 +1,86 @@
 import { useForm } from "react-hook-form";
-import type { registratioTypes } from "../../../types/registratioTypes.js";
+import type { registrationTypes } from "../../types/registrationTypes.js";
 import { yupResolver } from "@hookform/resolvers/yup";
-import RegistrationSchema from "./RegistrationSchema.js";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import RegistrationSuccess from "../components/RegistrationSuccess";
-import RegistrationInputField from "../../../components/RegistrationInputField.js";
+import { RegistrationSuccess } from "../../components/RegistrationSuccess.js";
 
-const Registration = () => {
+import { registrationSchema } from "../../schemas/index.js";
+// import { RegistrationInputField } from "../../components/RegistrationInputField";
+
+interface RegistrationInputField {
+  label: string;
+  errors: any;
+  type: string;
+  id: string;
+  register: any;
+  name: any;
+  errorMessage: any;
+}
+
+const RegistrationInputField: React.FC<RegistrationInputField> = ({
+  label,
+  errors,
+  type,
+  id,
+  register,
+  name,
+  errorMessage,
+}) => {
+  return (
+    <div className="w-full ">
+      <label className="block text-sm " htmlFor="name">
+        {label}
+      </label>
+      <input
+        className={`w-full border  ${
+          errors ? ` border-red` : ` border-slate-400`
+        }   outline-none`}
+        type={type}
+        id={id}
+        {...register(name)}
+        name={name}
+      />
+      {errors && <div className="text-xs text-orange-600">{errorMessage}</div>}
+    </div>
+  );
+};
+
+export const RegistrationPage = () => {
   const [responseError, setResponseError] = useState<string | null>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [responseMessage, setResponseMessage] = useState<string>("");
   const {
     register,
+
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({ resolver: yupResolver(RegistrationSchema) });
+  } = useForm({ resolver: yupResolver(registrationSchema) });
 
   const navigate = useNavigate();
 
-  const onSubmit = async (data: registratioTypes) => {
+  const onSubmit = async (data: registrationTypes) => {
     let url;
     if (process.env.NODE_ENV === "production") {
       url = ``;
     } else {
-      url = `http://localhost:3000`;
+      url = `http://localhost:4000`;
     }
 
     const userData = {
-      firstname: data.firstname,
-      lastname: data.lastname,
+      firstname: data.firstName,
+      lastname: data.lastName,
       email: data.email,
       password: data.password,
-      repeatPassword: data.repeatPassword,
+      passwordRepeat: data.repeatPassword,
     };
 
     try {
-      const response = await axios.post(`${url}/api/register`, userData);
+      const response = await axios.post(`${url}/auth/signup`, userData);
+      console.log("Registration response:", response.data);
       setResponseMessage(response.data.message);
       reset();
     } catch (error: any) {
@@ -62,7 +104,7 @@ const Registration = () => {
         onClick={() => navigate("/")}
         className="block cursor-pointer text-center font-roboto font-medium"
       >
-        eCommerce
+        App
       </h1>
 
       <div className="pt-16">
@@ -73,13 +115,23 @@ const Registration = () => {
           <h1 className="text-xl ">Create account</h1>
 
           <RegistrationInputField
-            label="Your firstname"
-            errors={errors.firstname}
+            label="first name"
+            errors={errors.firstName}
             type="text"
-            id="firstname"
+            id="firstName"
             register={register}
-            name="firstname"
-            errorMessage={errors.firstname?.message}
+            name="firstName"
+            errorMessage={errors.firstName?.message}
+          />
+
+          <RegistrationInputField
+            label="last name"
+            errors={errors.lastName}
+            type="text"
+            id="lastName"
+            register={register}
+            name="lastName"
+            errorMessage={errors.lastName?.message}
           />
 
           <div className="w-full">
@@ -105,7 +157,7 @@ const Registration = () => {
           </div>
 
           <RegistrationInputField
-            label="password"
+            label="Password"
             errors={errors.password}
             type="password"
             id="password"
@@ -124,7 +176,7 @@ const Registration = () => {
             errorMessage={errors.repeatPassword?.message}
           />
 
-          <button className=" w-full rounded-xl bg-yellow-300 px-5 py-2  text-sm hover:bg-yellow-400">
+          <button className=" w-full rounded-xl bg-green-400 px-5 py-2  text-sm hover:bg-green-600 cursor-pointer">
             Submit
           </button>
 
@@ -155,5 +207,3 @@ const Registration = () => {
     </div>
   );
 };
-
-export default Registration;
