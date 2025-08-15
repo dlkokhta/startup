@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import type { registrationTypes } from "../../types/registrationTypes.js";
+import type { registrationTypes } from "../../types/registrationTypes";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import axios from "axios";
@@ -8,45 +8,7 @@ import { useState } from "react";
 import { RegistrationSuccess } from "../../components/RegistrationSuccess.js";
 
 import { registrationSchema } from "../../schemas/index.js";
-// import { RegistrationInputField } from "../../components/RegistrationInputField";
-
-interface RegistrationInputField {
-  label: string;
-  errors: any;
-  type: string;
-  id: string;
-  register: any;
-  name: any;
-  errorMessage: any;
-}
-
-const RegistrationInputField: React.FC<RegistrationInputField> = ({
-  label,
-  errors,
-  type,
-  id,
-  register,
-  name,
-  errorMessage,
-}) => {
-  return (
-    <div className="w-full ">
-      <label className="block text-sm " htmlFor="name">
-        {label}
-      </label>
-      <input
-        className={`w-full border  ${
-          errors ? ` border-red` : ` border-slate-400`
-        }   outline-none`}
-        type={type}
-        id={id}
-        {...register(name)}
-        name={name}
-      />
-      {errors && <div className="text-xs text-orange-600">{errorMessage}</div>}
-    </div>
-  );
-};
+import { RegistrationInputField } from "../../components/RegistrationInputField";
 
 export const RegistrationPage = () => {
   const [responseError, setResponseError] = useState<string | null>("");
@@ -63,12 +25,7 @@ export const RegistrationPage = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data: registrationTypes) => {
-    let url;
-    if (process.env.NODE_ENV === "production") {
-      url = ``;
-    } else {
-      url = `http://localhost:4000`;
-    }
+    const url = import.meta.env.PROD ? `` : `http://localhost:4000`;
 
     const userData = {
       firstname: data.firstName,
