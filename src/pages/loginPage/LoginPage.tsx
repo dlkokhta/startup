@@ -36,7 +36,9 @@ export const LoginPage = () => {
     };
 
     try {
-      const response = await axios.post(`${url}/auth/login`, userData);
+      const response = await axios.post(`${url}/auth/login`, userData, {
+        withCredentials: true,
+      });
       console.log("response:", response.data);
       if (response.data.role === "admin") {
         navigate("/adminPanel");
@@ -45,7 +47,7 @@ export const LoginPage = () => {
       }
 
       reset();
-      console.log("login successfully");
+
       // const accessToken =
       //   response.data.role === "admin"
       //     ? response.data.adminToken
@@ -54,7 +56,7 @@ export const LoginPage = () => {
       sessionStorage.setItem("accessToken", accessToken);
       console.log("accessToken:", accessToken);
       // localStorage.setItem("data.email", data.email);
-      // localStorage.setItem("userName", response.data.name);
+      // localStorage.setItem("userName", response.dataame);
       // localStorage.setItem("role", response.data.role);
     } catch (error: any) {
       if (error?.response?.data?.message) {
