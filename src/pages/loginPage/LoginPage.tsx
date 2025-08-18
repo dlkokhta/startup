@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { loginTypes } from "../../types/loginTypes";
 import { loginSchema } from "../../schemas";
 import { Mail, Lock } from "lucide-react";
+import GoogleButton from "../../components/GoogleButton";
 
 export const LoginPage = () => {
   const [responseError, setResponseError] = useState<string | null>(null);
@@ -156,6 +157,7 @@ export const LoginPage = () => {
           <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
             Submit
           </button>
+          <GoogleButton />
         </form>
       </div>
 

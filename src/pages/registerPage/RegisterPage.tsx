@@ -9,6 +9,7 @@ import { RegistrationSuccess } from "../../components/RegistrationSuccess.js";
 
 import { registrationSchema } from "../../schemas/index.js";
 import { RegistrationInputField } from "../../components/RegistrationInputField";
+import GoogleButton from "../../components/GoogleButton.js";
 
 export const RegistrationPage = () => {
   const [responseError, setResponseError] = useState<string | null>("");
@@ -133,9 +134,11 @@ export const RegistrationPage = () => {
             errorMessage={errors.repeatPassword?.message}
           />
 
-          <button className=" w-full rounded-xl bg-green-400 px-5 py-2  text-sm hover:bg-green-600 cursor-pointer">
+          <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
             Submit
           </button>
+
+          <GoogleButton />
 
           <div className="text-sm">
             have an account?{" "}
