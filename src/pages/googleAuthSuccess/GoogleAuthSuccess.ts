@@ -17,7 +17,6 @@ export const GoogleAuthSuccess = () => {
       // Redirect user to main page
       navigate("/");
     } else {
-      // No token → fallback to login page
       navigate("/login");
     }
   }, [location, navigate]);

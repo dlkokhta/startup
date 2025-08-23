@@ -15,6 +15,7 @@ export const RegistrationPage = () => {
   const [responseError, setResponseError] = useState<string | null>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [responseMessage, setResponseMessage] = useState<string>("");
+
   const {
     register,
 
